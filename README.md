@@ -37,16 +37,16 @@ This request is completed _asynchronously_. Included in the library is a blockin
 ```cpp
 CURLHelper.get().blockForAllTransfers();
 ```
+Retrieval of data is simple:
+```cpp
+std::string& dataAsString = *connectionToGoogle.data;
+char* rawData = dataAsString.data();
+```
 Additionally, the API supports completion callbacks via an overload of the `addRequest` function:
 ```cpp
 CURLHelper.get().addRequest("https://www.google.com/", [](const std::string& data) {
     std::cout << "Literally Google: " << data << std::endl;
 });
-```
-Retrieval of data without the callback is also simple:
-```cpp
-std::string& dataAsString = *connectionToGoogle.data;
-char* rawData = dataAsString.data();
 ```
 And that's pretty much all there is to it!
 
