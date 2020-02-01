@@ -17,3 +17,34 @@ make
 ```
 
 This will generate the shared (libsimplecurl++) and static (libsimplecurl++_static) libraries.
+
+## Usage
+Once you've got a copy of the library you need to include the header in your code to access the CURLHelper class. The class itself is only accessable through the factory method `CURLHelper::get()` that returns a reference to the CURLHelper singleton (which is initialized when the function is called the first time):
+```
+#include "cURLHelper.hpp"
+
+...
+CURLHelper curl = CURLHelper.get();
+...
+```
+Once you have a reference to the singleton, it is easy to immediately begin a request:
+```
+curl.addRequest("https://www.google.com/");
+// OR
+CURLHelper.get().addRequest("https://www.google.com/");
+```
+This request is completed _asynchronously_. Included in the library is a blocking mechanism for convenience:
+```
+CURLHelper.get().blockForAllTransfers();
+```
+Additionally, the API supports completion callbacks via an overload of the `addRequest` function:
+```
+CURLHelper.get().addRequest("https://www.google.com/", [](const std::string& data) {
+    std::cout << "Literally Google: " << data << std::endl;
+});
+```
+And that's pretty much all there is to it!
+
+## Future work
+- Upload functionality
+- Configuration of header data
